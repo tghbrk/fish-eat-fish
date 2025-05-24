@@ -1,0 +1,76 @@
+# Fish Eat Fish Game Sprite Prompts (Side View)
+
+## Player Fish Sprites (Base Design - Same Shape, Different Sizes)
+1. "Base player fish design: A sleek, streamlined cartoon fish with a distinctive profile, big expressive eye, smooth dorsal and tail fins, and a friendly expression. Should work well at multiple sizes while maintaining the same proportions. Side view of the fish (facing right) on transparent background."
+2. "Level 1 player fish: The base fish design at small size (15-20px), light blue color. Side view of the fish (facing right) on transparent background."
+3. "Level 3 player fish: The base fish design at medium size (30-40px), same proportions as level 1, light blue color. Side view of the fish (facing right) on transparent background."
+4. "Level 5 player fish: The base fish design at large size (60-70px), same proportions as level 1, light blue color. Side view of the fish (facing right) on transparent background."
+
+## Future Player Fish Skins (For Main Menu Selection)
+5. "Orange player fish skin: The same base fish design but with orange coloration and subtle flame-like patterns. Side view of the fish (facing right) on transparent background."
+6. "Green player fish skin: The same base fish design but with green coloration and subtle leaf-like patterns. Side view of the fish (facing right) on transparent background."
+7. "Purple player fish skin: The same base fish design but with purple coloration and subtle cosmic patterns. Side view of the fish (facing right) on transparent background."
+
+## Enemy Fish Sprites (Primary Focus - Different Types & Sizes)
+8. "Small orange enemy fish: A tiny oval-bodied orange fish with small dorsal fin, simple tail details, and a timid eye expression. Size reference: 15-20px. Side view of the fish (facing right) on transparent background."
+9. "Small red enemy fish: A tiny triangular-bodied red fish with sharp dorsal and tail fins, simple details, and an alert eye expression. Size reference: 15-20px. Side view of the fish (facing right) on transparent background."
+10. "Small yellow enemy fish: A tiny elongated yellow fish with flowing dorsal and tail fins, simple details, and a curious eye expression. Size reference: 15-20px. Side view of the fish (facing right) on transparent background."
+
+11. "Medium green enemy fish: A medium-sized angular-bodied green fish with prominent spiky dorsal fin, moderate detail in side scales, and a focused eye. Size reference: 30-40px. Side view of the fish (facing right) on transparent background."
+12. "Medium blue enemy fish: A medium-sized crescent-bodied blue fish with symmetrical dorsal and ventral fins, moderate detail in side patterns, and a calm eye. Size reference: 30-40px. Side view of the fish (facing right) on transparent background."
+13. "Medium purple enemy fish: A medium-sized diamond-bodied purple fish with elegant flowing fins along its profile, moderate detail in side textures, and a watchful eye. Size reference: 30-40px. Side view of the fish (facing right) on transparent background."
+
+14. "Large red enemy fish: A large spiky-bodied red fish with elaborate dorsal and pectoral fins, detailed side scale patterns, and an aggressive eye. Size reference: 50-60px. Side view of the fish (facing right) on transparent background."
+15. "Large teal enemy fish: A large angular-bodied teal fish with fan-like dorsal and tail fins, detailed side gradient coloring, and a dominant eye. Size reference: 50-60px. Side view of the fish (facing right) on transparent background."
+16. "Large gold enemy fish: A large round-bodied gold fish with flowing ribbon-like dorsal and tail fins, detailed ornate side patterns, and a majestic eye. Size reference: 50-60px. Side view of the fish (facing right) on transparent background."
+
+17. "Huge predator fish: A massive shark-inspired fish with distinctive elongated profile, intimidating dorsal fin, detailed side texturing, and a fierce eye with teeth visible. Size reference: 80-100px. Side view of the fish (facing right) on transparent background."
+
+## Food Sprites
+18. "Small glowing plankton particles in various shades of green, pulsating with gentle light. Side view on transparent background."
+19. "Tiny fish food pellets in different colors (brown, orange, pink) with slight shimmer effect. Side view on transparent background."
+20. "Small clusters of colorful algae with subtle movement animation. Side view on transparent background."
+21. "Miniature shrimp-like creatures in pink/orange with tiny details. Side view on transparent background."
+
+## Visual Effect Sprites
+22. "Boost trail effect with orange/yellow flame-like particles and speed lines. Transparent background."
+23. "Growth animation with expanding blue-white rings and sparkles. Transparent background."
+24. "Shrink animation with contracting orange-red rings when losing a level during boost. Transparent background."
+25. "Eating effect with small scattered particles in the eaten fish's color. Transparent background."
+26. "Level-up effect with ascending golden stars and light beams. Transparent background."
+27. "Boost start effect with small burst of orange particles radiating outward. Transparent background."
+
+## Visual Indicator Sprites
+28. "Green outline effect for edible fish (20% smaller than player). Subtle, semi-transparent glow. Transparent background."
+29. "Red outline effect for dangerous fish (20% larger than player). Subtle, semi-transparent glow. Transparent background."
+30. "Yellow outline effect for similar-sized fish. Subtle, semi-transparent glow. Transparent background."
+31. "Player vision area visualization - subtle blue-tinted elliptical gradient that fades at edges. Transparent background."
+
+## UI Element Sprites
+32. "Progress bar labeled 'Level' with blue gradient fill and transparent background, positioned at bottom center."
+33. "Minimalist game logo featuring stylized fish silhouettes and 'Fish Eat Fish' text."
+34. "Clean, rounded button design with subtle gradient and hover effect for menu items."
+35. "Transparent minimap frame with elegant blue border for top-left corner placement."
+36. "Stylish leaderboard panel with semi-transparent blue background for top-right corner placement."
+37. "Full screen toggle button with appropriate icon and subtle glow effect."
+38. "Play Again button with fish icon and energetic design for game over screen."
+
+## Background Elements
+39. "Clean underwater background with subtle blue gradient and minimal distraction."
+40. "Simple underwater light rays streaming from above with minimal dust particles."
+41. "Subtle grid pattern for minimap orientation with low opacity."
+42. "World boundary indicator - thin, elegant border for the game world edges."
+
+## Animation Frames
+43. "Fish swimming animation sequence (8 frames) showing tail movement for player fish with primarily horizontal motion."
+44. "Fish eating animation sequence (5 frames) showing mouth opening and closing."
+45. "Fish boost animation sequence (6 frames) showing speed burst effect with trailing particles."
+46. "Fish growth animation sequence (4 frames) showing size transition effect between levels."
+47. "Fish shrink animation sequence (4 frames) showing size reduction when losing a level during boost."
+
+## Game State Effects
+48. "Game over effect with subtle red vignette and floating text."
+49. "Cursor indicator that fades to 70% opacity while moving, with subtle pointer design."
+50. "Cursor fade-out animation (3 frames) showing transition from full visibility to 70% opacity."
+51. "Elliptical player vision area indicator for minimap, semi-transparent blue."
+52. "Floating score text that rises and fades when points are earned."
