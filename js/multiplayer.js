@@ -8,7 +8,8 @@ class MultiplayerManager {
         this.connected = false;
         this.players = {}; // Other players in the game
         this.lastUpdateTime = 0;
-        this.updateInterval = 50; // Send updates every 50ms
+        this.updateInterval = 50; // Send updates every 50ms (multiplayer)
+        this.singlePlayerUpdateInterval = 200; // Send updates every 200ms when alone
         // Connection status element removed from UI
     }
 
@@ -220,9 +221,13 @@ class MultiplayerManager {
     sendPlayerUpdate() {
         if (!this.connected || !this.game.player || !this.game.player.isAlive) return;
 
+        // Determine update interval based on number of other players
+        const otherPlayersCount = this.getOtherPlayersCount();
+        const currentUpdateInterval = otherPlayersCount > 0 ? this.updateInterval : this.singlePlayerUpdateInterval;
+
         // Limit update frequency
         const now = Date.now();
-        if (now - this.lastUpdateTime < this.updateInterval) return;
+        if (now - this.lastUpdateTime < currentUpdateInterval) return;
         this.lastUpdateTime = now;
 
         // Ensure player score is synced with game score
@@ -451,12 +456,31 @@ class MultiplayerManager {
         }
     }
 
+    /**
+     * Get the number of other players currently connected
+     * @returns {number} Number of other players
+     */
+    getOtherPlayersCount() {
+        return Object.keys(this.players).filter(playerId => this.players[playerId].isAlive).length;
+    }
+
+    /**
+     * Check if playing alone (no other players)
+     * @returns {boolean} True if playing alone
+     */
+    isPlayingAlone() {
+        return this.getOtherPlayersCount() === 0;
+    }
+
 
 
     /**
      * Draw all remote players
      */
     drawPlayers(ctx) {
+        // Skip drawing if playing alone
+        if (this.isPlayingAlone()) return;
+
         for (const playerId in this.players) {
             const player = this.players[playerId];
             if (player.isAlive) {
@@ -512,6 +536,9 @@ class MultiplayerManager {
      */
     checkPlayerCollisions() {
         if (!this.game.player || !this.game.player.isAlive) return;
+
+        // Skip collision checking if playing alone
+        if (this.isPlayingAlone()) return;
 
         for (const playerId in this.players) {
             const remotePlayer = this.players[playerId];

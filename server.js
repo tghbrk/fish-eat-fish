@@ -23,7 +23,8 @@ const gameState = {
     enemies: [],
     worldWidth: 3840,  // Default, will be updated based on client window size
     worldHeight: 2160, // Default, will be updated based on client window size
-    maxFoodItems: 100
+    maxFoodItems: 100,
+    connectedPlayers: 0  // Track number of connected players
 };
 
 // Food generation
@@ -54,17 +55,45 @@ for (let i = 0; i < 50; i++) {
     generateFood();
 }
 
-// Food spawning interval
-setInterval(() => {
-    const newFood = generateFood();
-    if (newFood) {
-        io.emit('foodSpawned', newFood);
+// Food spawning interval - optimized for player count
+let foodSpawnInterval;
+
+function startFoodSpawning() {
+    if (foodSpawnInterval) {
+        clearInterval(foodSpawnInterval);
     }
-}, 500); // Spawn food every 500ms
+
+    // Adjust spawn rate based on number of players
+    let spawnRate;
+    if (gameState.connectedPlayers === 0) {
+        return; // No spawning if no players
+    } else if (gameState.connectedPlayers === 1) {
+        spawnRate = 2000; // Slower spawning for single player (every 2 seconds)
+    } else {
+        spawnRate = 500; // Normal spawning for multiplayer (every 500ms)
+    }
+
+    foodSpawnInterval = setInterval(() => {
+        const newFood = generateFood();
+        if (newFood && gameState.connectedPlayers > 0) {
+            io.emit('foodSpawned', newFood);
+        }
+    }, spawnRate);
+}
+
+// Start initial food spawning
+startFoodSpawning();
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {
     console.log('A user connected:', socket.id);
+
+    // Increment connected players count
+    gameState.connectedPlayers++;
+    console.log(`Connected players: ${gameState.connectedPlayers}`);
+
+    // Restart food spawning with new player count
+    startFoodSpawning();
 
     // Send current game state to the new player
     socket.emit('gameState', gameState);
@@ -95,8 +124,10 @@ io.on('connection', (socket) => {
             gameState.worldHeight = Math.max(gameState.worldHeight, playerData.worldHeight);
         }
 
-        // Broadcast new player to all other players
-        socket.broadcast.emit('playerJoined', gameState.players[socket.id]);
+        // Broadcast new player to all other players (only if there are other players)
+        if (gameState.connectedPlayers > 1) {
+            socket.broadcast.emit('playerJoined', gameState.players[socket.id]);
+        }
     });
 
     // Handle player movement
@@ -112,8 +143,10 @@ io.on('connection', (socket) => {
             player.sizeLevel = playerData.sizeLevel;
             player.isAlive = playerData.isAlive;
 
-            // Broadcast player update to all other players
-            socket.broadcast.emit('playerMoved', player);
+            // Broadcast player update to all other players (only if there are other players)
+            if (gameState.connectedPlayers > 1) {
+                socket.broadcast.emit('playerMoved', player);
+            }
         }
     });
 
@@ -152,8 +185,10 @@ io.on('connection', (socket) => {
             player.sizeLevel = playerData.sizeLevel;
             player.isAlive = true;
 
-            // Broadcast player respawn to all players
-            io.emit('playerRespawned', player);
+            // Broadcast player respawn to all players (only if there are other players)
+            if (gameState.connectedPlayers > 1) {
+                io.emit('playerRespawned', player);
+            }
         }
     });
 
@@ -161,13 +196,22 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('User disconnected:', socket.id);
 
+        // Decrement connected players count
+        gameState.connectedPlayers = Math.max(0, gameState.connectedPlayers - 1);
+        console.log(`Connected players: ${gameState.connectedPlayers}`);
+
+        // Restart food spawning with new player count
+        startFoodSpawning();
+
         // Remove player from game state
         if (gameState.players[socket.id]) {
             const playerName = gameState.players[socket.id].name;
             delete gameState.players[socket.id];
 
-            // Broadcast player left to all players
-            io.emit('playerLeft', socket.id);
+            // Broadcast player left to all players (only if there are other players)
+            if (gameState.connectedPlayers > 0) {
+                io.emit('playerLeft', socket.id);
+            }
             console.log('Player left:', playerName);
         }
     });
