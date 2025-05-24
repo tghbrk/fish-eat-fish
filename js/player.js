@@ -51,6 +51,10 @@ class PlayerFish {
         this.isAlive = true;
         this.respawnTimer = 0;
 
+        // Fish type properties for tutorial (simplified for this version)
+        this.preferredPrey = 'small fish';
+        this.weakness = 'large fish';
+
         // Growth tracking
         this.fishEaten = 0;
         this.fishNeededToGrow = 5; // Initial number of fish needed to grow
@@ -179,8 +183,12 @@ class PlayerFish {
         // Get the current camera position from the game object
         // This ensures we're using the exact same camera position as the rendering system
         const game = window.gameInstance;
-        const cameraX = game.cameraX;
-        const cameraY = game.cameraY;
+        if (!game) {
+            console.warn('Game instance not available yet, using default camera position');
+            return; // Skip update if game instance is not ready
+        }
+        const cameraX = game.cameraX || 0;
+        const cameraY = game.cameraY || 0;
 
         // Convert mouse position to world coordinates with direct mapping
         const worldMouseX = this.mouseX + cameraX;

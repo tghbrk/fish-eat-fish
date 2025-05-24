@@ -31,7 +31,7 @@ function calculateDistance(x1, y1, x2, y2) {
 function getRandomPositionOutsideCanvas(canvas, radius) {
     const side = random(0, 3); // 0: top, 1: right, 2: bottom, 3: left
     let x, y;
-    
+
     switch(side) {
         case 0: // top
             x = random(-radius, canvas.width + radius);
@@ -50,16 +50,16 @@ function getRandomPositionOutsideCanvas(canvas, radius) {
             y = random(-radius, canvas.height + radius);
             break;
     }
-    
+
     return { x, y };
 }
 
 // Get random color
 function getRandomColor() {
     const colors = [
-        '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+        '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
         '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-        '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+        '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
         '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC'
     ];
     return colors[random(0, colors.length - 1)];
@@ -67,10 +67,28 @@ function getRandomColor() {
 
 // Show an element by ID
 function showElement(id) {
-    document.getElementById(id).classList.remove('hidden');
+    const element = document.getElementById(id);
+    if (element) {
+        element.classList.remove('hidden');
+    } else {
+        console.warn(`Element with id '${id}' not found`);
+    }
 }
 
 // Hide an element by ID
 function hideElement(id) {
-    document.getElementById(id).classList.add('hidden');
+    const element = document.getElementById(id);
+    if (element) {
+        element.classList.add('hidden');
+    } else {
+        console.warn(`Element with id '${id}' not found`);
+    }
+}
+
+// Format fish type for display
+function formatFishType(fishType) {
+    if (!fishType) return 'Unknown';
+
+    // Capitalize first letter and format the fish type
+    return fishType.charAt(0).toUpperCase() + fishType.slice(1).toLowerCase();
 }

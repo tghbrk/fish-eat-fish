@@ -152,13 +152,16 @@ class Game {
 
     bindEventListeners() {
         // Start button
-        document.getElementById('start-button').addEventListener('click', () => {
-            if (this.firstTimePlayer) {
-                this.startTutorial();
-            } else {
-                this.startGame();
-            }
-        });
+        const startButton = document.getElementById('start-button');
+        if (startButton) {
+            startButton.addEventListener('click', () => {
+                if (this.firstTimePlayer) {
+                    this.startTutorial();
+                } else {
+                    this.startGame();
+                }
+            });
+        }
 
         // Add keyboard shortcut for performance stats (F key)
         window.addEventListener('keydown', (e) => {
@@ -340,6 +343,14 @@ class Game {
         this.score = 0;
         this.level = 1;
 
+        // Initialize player if not exists
+        if (!this.player) {
+            this.player = new PlayerFish(this.canvas, 'Player');
+            this.player.color = '#3399FF';
+            this.player.eyeColor = 'white';
+            this.player.pupilColor = 'black';
+        }
+
         // Reset player and position in center
         this.player.reset();
 
@@ -349,7 +360,10 @@ class Game {
 
         // Update UI
         this.updateScore(0);
-        document.getElementById('level-display').textContent = `Level: ${this.level}`;
+        const levelDisplay = document.getElementById('level-display');
+        if (levelDisplay) {
+            levelDisplay.textContent = `Level: ${this.level}`;
+        }
         this.updateProgressBar();
 
         // Set up tutorial content
@@ -396,16 +410,16 @@ class Game {
                 break;
 
             case 3:
-                tutorialTitle.textContent = 'Fish Types';
-                tutorialText.textContent = 'There are different types of fish: Normal (most common), Golden (high points), Poisonous (dangerous), Speedy (fast), and Armored (tough).';
+                tutorialTitle.textContent = 'Fish Sizes';
+                tutorialText.textContent = 'Fish come in different sizes. Look for the colored outlines: green means you can eat them, red means they can eat you!';
 
-                // Spawn small fish of various types
-                this.spawnTutorialFish('special', 5);
+                // Spawn small fish of various sizes
+                this.spawnTutorialFish('small', 3);
                 break;
 
             case 4:
-                tutorialTitle.textContent = 'Food Chain';
-                tutorialText.textContent = `Each game, you have a preferred prey (${formatFishType(this.player.preferredPrey)}) that gives double points, and a weakness (${formatFishType(this.player.weakness)}) that can eat you even if smaller!`;
+                tutorialTitle.textContent = 'Growth System';
+                tutorialText.textContent = 'Eat food and smaller fish to fill your growth bar. When it\'s full, you\'ll grow to the next size level!';
                 break;
 
             case 5:
@@ -443,6 +457,10 @@ class Game {
                 enemy = new EnemyFish(this.canvas, this.player.sizeLevel - 2);
                 enemy.sizeLevel = this.player.sizeLevel + 2;
                 enemy.radius = 25; // Larger than player
+            } else {
+                // Default case for any other type
+                enemy = new EnemyFish(this.canvas, this.player.sizeLevel);
+                enemy.radius = 15; // Similar size to player
             }
 
             // Position fish at different sides of the screen

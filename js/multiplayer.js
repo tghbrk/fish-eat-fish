@@ -435,6 +435,22 @@ class MultiplayerManager {
         console.log(`Connection status: ${status}`);
     }
 
+    /**
+     * Safe emit - prevents errors if socket is not connected
+     * @param {string} event - Event name
+     * @param {*} data - Data to send
+     */
+    safeEmit(event, data) {
+        if (this.socket && this.connected) {
+            try {
+                this.socket.emit(event, data);
+            } catch (error) {
+                console.error('Error emitting socket event:', error);
+                this.connected = false;
+            }
+        }
+    }
+
 
 
     /**
